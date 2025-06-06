@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Cytracon Webservices. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <cytracon_fileallowed>
+            <extensions>
+                <vector>
+                    <svg>svg</svg>
+                    <svg_xml>svg+xml</svg_xml>
+                </vector>
+                <web_image>
+                    <webp>webp</webp>
+                </web_image>
+                <web_image>
+                    <avif>avif</avif>
+                </web_image>
+            </extensions>
+        </cytracon_fileallowed>
+        <dev>
+            <image>
+                <adapters>
+                    <GD2>
+                        <class>Cytracon\FileAllowed\Model\Image\Adapter\Gd2</class>
+                    </GD2>
+                </adapters>
+            </image>
+        </dev>
+    </default>
+</config>
