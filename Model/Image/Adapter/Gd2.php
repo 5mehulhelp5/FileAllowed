@@ -3,14 +3,14 @@
  * Copyright © Cytracon Webservices. All rights reserved.
  * See LICENSE.txt for license details.
  */
-
+ 
 namespace Cytracon\FileAllowed\Model\Image\Adapter;
-
+ 
 use Magento\Framework\Exception\FileSystemException;
 use Magento\Framework\Image\Adapter\AbstractAdapter;
 use Magento\Framework\Phrase;
 use Cytracon\FileAllowed\Helper\ImageHelper;
-
+ 
 /**
  * Gd2 adapter.
  *
@@ -437,6 +437,21 @@ class Gd2 extends AbstractAdapter
     }
 
     /**
+     * Gives true for an AVIF with alpha, false otherwise
+     *
+     * @param string $filename
+     * @return bool
+     */
+    public function checkAlphaAvif($filename)
+    {
+        $buf = file_get_contents((string) $filename, false, null, 0, 1024);
+        if (strpos($buf, 'ftypavif') === false) {
+            return false;
+        }
+        return (strpos($buf, 'auxC') !== false && strpos($buf, 'alpha') !== false);
+    }
+
+    /**
      * Checks if image has alpha transparency
      *
      * @param resource $imageResource
@@ -472,6 +487,7 @@ class Gd2 extends AbstractAdapter
 
         if (IMAGETYPE_AVIF === $fileType) {
             $isTrueColor = true;
+            $isAlpha = $this->checkAlphaAvif($this->_fileName);
         }
 
         /*
